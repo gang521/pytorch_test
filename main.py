@@ -18,13 +18,13 @@ transform = transforms.Compose([resize_transform, transforms.ToTensor()])
 
 # 加载训练数据集
 train_dataset = datasets.ImageFolder(
-    root="D:/pycharmtest/pytorch_test/data/train_data",
+    root="./data/train_data",
     transform=transform
 )
 
 # 加载测试数据集
 test_dataset = datasets.ImageFolder(
-    root="D:/pycharmtest/pytorch_test/data/test_imagesset",
+    root="./data/test_imagesset",
     transform=transform
 )
 
@@ -48,7 +48,7 @@ class TestModel(nn.Module):
     def __init__(self):
         super(TestModel, self).__init__()
         self.fc = nn.Linear(573300, 5)  # 修改全连接层的输入维度为390*490
-        self.pth = "D:/pycharmtest/pytorch_test/model.pth"
+        self.pth = "./model.pth"
     def forward(self, x):
         x = x.view(x.size(0), -1)  # 将输入展平为一维向量
         x = self.fc(x)  # 将输入传递给全连接层
@@ -58,7 +58,7 @@ criterion = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
 #检察是否存在训练好的模型，如果有则加载使用
-model_path="D:/pycharmtest/pytorch_test/model.pth"
+model_path="./model.pth"
 if os.path.exists(model_path):
     checkpoint = torch.load(model_path)
     if 'epoch' in checkpoint:
@@ -75,7 +75,7 @@ else:
 # 训练模型
 epochs = 20
 for epoch in range(#start_epoch,
-        # start_epoch +
+        #start_epoch +
         epochs):
     model.train()
     for images, labels in train_loader:
@@ -88,10 +88,16 @@ for epoch in range(#start_epoch,
 #保存模型
 checkpoint={
     'epoch': epoch + 1,
-    'model_state_dict':model.state_dict(),
-    'optimizer_state_dict':optimizer.state_dict()
+    'model_state_dict': model.state_dict(),
+    'optimizer_state_dict': optimizer.state_dict()
 }
-torch.save(model.state_dict(), "model.pth")
+#torch.save(model.state_dict(),"model.pth")
+torch.save({
+    'epoch': epoch ,
+    'model_state_dict': model.state_dict(),
+    'optimizer_state_dict': optimizer.state_dict(),
+    'loss': loss,
+    }, "model.pth")
 
 # 评估模型
 model.eval()
