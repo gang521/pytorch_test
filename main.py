@@ -69,14 +69,12 @@ if os.path.exists(model_path):
     optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
     print("使用存在的模型训练")
 else:
-    start_epoch=0
+    start_epoch = 0
     print("进行新的训练")
 
 # 训练模型
 epochs = 20
-for epoch in range(#start_epoch,
-        #start_epoch +
-        epochs):
+for epoch in range(start_epoch, start_epoch + epochs):
     model.train()
     for images, labels in train_loader:
         optimizer.zero_grad()
@@ -93,7 +91,7 @@ checkpoint={
 }
 #torch.save(model.state_dict(),"model.pth")
 torch.save({
-    'epoch': epoch ,
+    'epoch': epoch,
     'model_state_dict': model.state_dict(),
     'optimizer_state_dict': optimizer.state_dict(),
     'loss': loss,
@@ -112,6 +110,7 @@ with torch.no_grad():
 
 # 打印训练结果和准确率
 accuracy = 100 * correct / total
+print("进行训练的总轮数为{}".format(epoch))
 print("Accuracy: {}%".format(accuracy))
 
 
