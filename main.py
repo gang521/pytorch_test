@@ -4,13 +4,11 @@ import torch.nn as nn
 from torchvision import datasets, transforms
 
 # Get cpu, gpu or mps device for training.
-device = (
-    "cuda"
-    if torch.cuda.is_available()
-    else "mps"
-    if torch.backends.mps.is_available()
-    else "cpu"
-)
+# device = (
+#     "cuda"
+#     if torch.cuda.is_available()
+#     else "cpu"
+# )
 
 # 定义数据集的转换操作
 resize_transform = transforms.Resize((390, 490))
